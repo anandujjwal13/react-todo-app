@@ -1,27 +1,18 @@
 import update from 'immutability-helper';
+import axios from 'axios';
 
 /**
  * Get the list of todo items.
  * @return {Array}
  */
 export function getAll() {
-    return [
-        {
-            id: 1,
-            text: 'Learn Javascript',
-            completed: false
-        },
-        {
-            id: 2,
-            text: 'Learn React',
-            completed: false
-        },
-        {
-            id: 3,
-            text: 'Build a React App',
-            completed: false
-        }
-    ]
+    return axios.get('https://a5uqo3j80l.execute-api.ap-south-1.amazonaws.com/dev/practice-todos?userId=user1', {})
+        .then(function (response) {
+            return response.data.body;
+        })
+        .catch(function (error) {
+            return error;
+        });
 }
 
 export function getItemById(itemId) {
@@ -34,7 +25,7 @@ export function updateStatus(items, itemId, completed) {
     // Returns a new list of data with updated item.
     return update(items, {
         [index]: {
-            completed: {$set: completed}
+            completed: { $set: completed }
         }
     });
 }
@@ -44,10 +35,13 @@ export function updateStatus(items, itemId, completed) {
  * Can remove this logic when the todo is created using backend/database logic.
  * @type {Number}
  */
-let todoCounter = 1;
 
-function getNextId() {
-    return getAll().length + todoCounter++;
+function getNextId(list) {
+    let max = Number.MIN_SAFE_INTEGER;
+    const reducer = (accumulator, curr) => Math.max(accumulator, curr.id) + 1
+    const newId = list.reduce(reducer, max);
+    console.log(newId);
+    return newId;
 }
 
 /**
@@ -59,7 +53,7 @@ function getNextId() {
  */
 export function addToList(list, data) {
     let item = Object.assign({
-        id: getNextId()
+        id: getNextId(list)
     }, data);
 
     return list.concat([item]);

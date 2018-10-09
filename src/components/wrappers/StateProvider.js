@@ -11,8 +11,15 @@ class StateProvider extends Component {
             query: '',
             mode: MODE_CREATE,
             filter: FILTER_ALL,
-            list: getAll()
+            list: []
         }
+        this.fetchTodos();
+    }
+
+    fetchTodos(){
+        getAll().then((todos)=>{
+            this.setState({list: todos}); 
+        });
     }
 
     render() {
