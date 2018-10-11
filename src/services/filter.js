@@ -8,7 +8,7 @@ export const FILTER_COMPLETED = 'completed';
 
 function saveTodos(list){
     console.log("send for update",list);
-    axios.put('https://a5uqo3j80l.execute-api.ap-south-1.amazonaws.com/dev/practice-todos', { userId:'user1',tasks:list})
+    axios.put('https://e8w0amfspe.execute-api.ap-south-1.amazonaws.com/dev/todo-application', { userId:'user1',tasks:list})
       .then(function (response) {
         console.log("Successfully updated",response);
       })

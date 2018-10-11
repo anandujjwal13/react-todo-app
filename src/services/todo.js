@@ -6,8 +6,9 @@ import axios from 'axios';
  * @return {Array}
  */
 export function getAll() {
-    return axios.get('https://a5uqo3j80l.execute-api.ap-south-1.amazonaws.com/dev/practice-todos?userId=user1', {})
+    return axios.get('https://e8w0amfspe.execute-api.ap-south-1.amazonaws.com/dev/todo-application?userId=user1', {})
         .then(function (response) {
+            console.log(response ,"response");
             return response.data.body;
         })
         .catch(function (error) {
